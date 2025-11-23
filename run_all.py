@@ -2,7 +2,7 @@ import threading
 import os
 
 def run_flask():
-    os.system("python app.py")
+    os.system("python smart_bracelet_bot.py")
 
 def run_bot():
     os.system("python bot.py")
@@ -16,3 +16,4 @@ if __name__ == "__main__":
 
     t1.join()
     t2.join()
+
