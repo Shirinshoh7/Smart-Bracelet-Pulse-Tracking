@@ -29,7 +29,7 @@
 
 1.  **Установите зависимости:**
     ```bash
-    pip install -r requirements.txt
+    pip install -r 
     ```
 2.  **Запустите проект:**
     *(Для запуска используется файл `run_all.py`, который запускает Web Backend и Telegram Bot в разных потоках)*
