@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Bracelet Dashboard</title>
+  <script>
+    async function updatePulse() {
+      const res = await fetch('/pulse');
+      const data = await res.json();
+      document.getElementById('pulse').innerText = data.pulse;
+    }
+    setInterval(updatePulse, 2000);
+  </script>
+</head>
+<body style="font-family:Arial; text-align:center; margin-top:50px;">
+  <h1>💓 Smart Bracelet Dashboard</h1>
+  <h2>Текущий пульс: <span id="pulse">{{ pulse }}</span> bpm</h2>
+</body>
+</html>
