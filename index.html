@@ -1,19 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Bracelet Dashboard</title>
-  <script>
-    async function updatePulse() {
-      const res = await fetch('/pulse');
-      const data = await res.json();
-      document.getElementById('pulse').innerText = data.pulse;
-    }
-    setInterval(updatePulse, 2000);
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bracelet Dashboard</title>
+    <style>
+        :root {
+            --accent: #ff4757;
+            --bg: #f0f2f5;
+            --text: #2f3542;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .pulse-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .pulse-value {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            line-height: 1;
+        }
+
+        .unit {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #a4b0be;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .heart-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            animation: beat 1s infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.25); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #2ed573;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            color: #747d8c;
+        }
+    </style>
+    <script>
+        async function updatePulse() {
+            try {
+                const res = await fetch('/pulse');
+                const data = await res.json();
+                const element = document.getElementById('pulse');
+                
+                if (element.innerText !== data.pulse.toString()) {
+                    element.innerText = data.pulse;
+                }
+            } catch (err) {
+                console.error("Connection error");
+            }
+        }
+        setInterval(updatePulse, 2000);
+    </script>
 </head>
-<body style="font-family:Arial; text-align:center; margin-top:50px;">
-  <h1>💓 Smart Bracelet Dashboard</h1>
-  <h2>Текущий пульс: <span id="pulse">{{ pulse }}</span> bpm</h2>
+<body>
+
+    <div class="card">
+        <h1>HEART RATE</h1>
+        
+        <div class="heart-icon">❤️</div>
+        
+        <div class="pulse-container">
+            <span id="pulse" class="pulse-value">{{ pulse }}</span>
+            <span class="unit">bpm</span>
+        </div>
+
+        <div>
+            <span class="status-dot"></span>
+            <span class="status-text">Live Monitoring</span>
+        </div>
+    </div>
+
 </body>
 </html>
